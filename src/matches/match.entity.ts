@@ -5,9 +5,10 @@ import {
   CreateDateColumn
 } from 'typeorm';
 import { IsNotEmpty } from 'class-validator';
+import { BaseEntity } from 'typeorm';
 
 @Entity()
-export class Match {
+export class Match extends BaseEntity {
   @PrimaryColumn()
   @IsNotEmpty()
   keyword: string;
@@ -17,5 +18,5 @@ export class Match {
   username: string;
 
   @CreateDateColumn()
-  createdAt: string;
+  createdAt: Date;
 }

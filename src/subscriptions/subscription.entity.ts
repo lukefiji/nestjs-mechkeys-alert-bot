@@ -5,9 +5,10 @@ import {
   CreateDateColumn
 } from 'typeorm';
 import { IsNotEmpty } from 'class-validator';
+import { BaseEntity } from 'typeorm';
 
 @Entity()
-export class Subscription {
+export class Subscription extends BaseEntity {
   @PrimaryColumn()
   @IsNotEmpty()
   keyword: string;
@@ -17,5 +18,5 @@ export class Subscription {
   username: string;
 
   @CreateDateColumn()
-  createdAt: string;
+  createdAt: Date;
 }

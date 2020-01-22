@@ -1,8 +1,14 @@
-import { PrimaryColumn, Column, Entity, CreateDateColumn } from 'typeorm';
+import {
+  PrimaryColumn,
+  Column,
+  Entity,
+  CreateDateColumn,
+  BaseEntity
+} from 'typeorm';
 import { IsNotEmpty } from 'class-validator';
 
 @Entity()
-export class Post {
+export class Post extends BaseEntity {
   @PrimaryColumn()
   @IsNotEmpty()
   id: string;
@@ -16,5 +22,5 @@ export class Post {
   title: string;
 
   @CreateDateColumn()
-  createdAt: string;
+  createdAt: Date;
 }
