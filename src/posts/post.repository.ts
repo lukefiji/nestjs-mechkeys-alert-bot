@@ -19,9 +19,10 @@ export class PostRepository extends Repository<Post> {
     try {
       await post.save();
     } catch (error) {
+      console.log(error);
       throw new InternalServerErrorException();
     }
-    console.log(post);
+
     return post;
   }
 }

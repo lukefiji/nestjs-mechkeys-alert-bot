@@ -3,9 +3,11 @@ import {
   Column,
   Entity,
   CreateDateColumn,
-  BaseEntity
+  BaseEntity,
+  OneToMany
 } from 'typeorm';
 import { IsNotEmpty } from 'class-validator';
+import { Match } from '../matches/match.entity';
 
 @Entity()
 export class Post extends BaseEntity {

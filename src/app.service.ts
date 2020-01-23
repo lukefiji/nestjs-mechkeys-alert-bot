@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import snoowrap from 'snoowrap';
 import { SubmissionStream } from 'snoostorm';
 import { PostsService } from './posts/posts.service';
@@ -13,24 +13,10 @@ export class AppService {
     return 'Hello World!';
   }
 
-  async handlePosts(data: any, searchQuery: string) {
-    try {
-      const { title, url, id } = data;
-      const normalizedTitle = title.toLowerCase();
-
-      // Normalize search query for a regex
-      const escapedQuery = searchQuery.replace(
-        /[-\/\\^$*+?.()|[\]{}]/g,
-        '\\$&'
-      );
-      const searchRegex = new RegExp(`${escapedQuery}`, 'i');
-
-      if (normalizedTitle.match(searchRegex)) {
-        await this.postsService.savePost({ id, url, title });
-      }
-    } catch (err) {
-      console.log(err);
-    }
+  async handleNewPosts(data: any) {
+    const { title, url, id } = data;
+    const normalizedTitle = title.toLowerCase();
+    await this.postsService.savePost({ id, url, title: normalizedTitle });
   }
 
   listenForPosts(): void {
@@ -43,12 +29,12 @@ export class AppService {
     });
 
     const posts = new SubmissionStream(bot, {
-      limit: 50,
+      limit: 1,
       pollTime: 2000,
       subreddit: 'mechmarket'
     });
 
     console.log('Listening for posts');
-    posts.on('item', (data: any) => this.handlePosts(data, '[us-ca]'));
+    posts.on('item', (data: any) => this.handleNewPosts(data));
   }
 }
