@@ -6,8 +6,7 @@ import { SubscriptionsModule } from './subscriptions/subscriptions.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { PostsModule } from './posts/posts.module';
 import { MatchesModule } from './matches/matches.module';
-import { PostsListenerService } from './posts-listener/posts-listener.service';
-import { InboxListenerService } from './inbox-listener/inbox-listener.service';
+import { ListenerModule } from './listener/listener.module';
 import typeOrmConfig from './typeorm.config';
 
 @Module({
@@ -16,9 +15,10 @@ import typeOrmConfig from './typeorm.config';
     TypeOrmModule.forRoot(typeOrmConfig),
     SubscriptionsModule,
     PostsModule,
-    MatchesModule
+    MatchesModule,
+    ListenerModule
   ],
   controllers: [AppController],
-  providers: [AppService, PostsListenerService, InboxListenerService]
+  providers: [AppService]
 })
 export class AppModule {}
