@@ -4,7 +4,7 @@ import { InternalServerErrorException } from '@nestjs/common';
 import { SaveSubscriptionDto } from './saveSubscription.dto';
 
 @EntityRepository(Subscription)
-export class SubscriptionRepositry extends Repository<Subscription> {
+export class SubscriptionRepository extends Repository<Subscription> {
   async getSubscriptions() {}
 
   async saveSubscription(

@@ -2,11 +2,12 @@ import { Module } from '@nestjs/common';
 import { SubscriptionsController } from './subscriptions.controller';
 import { SubscriptionsService } from './subscriptions.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { SubscriptionRepositry } from './subscription.repository';
+import { SubscriptionRepository } from './subscription.repository';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([SubscriptionRepositry])],
+  imports: [TypeOrmModule.forFeature([SubscriptionRepository])],
   controllers: [SubscriptionsController],
-  providers: [SubscriptionsService]
+  providers: [SubscriptionsService],
+  exports: [SubscriptionsService]
 })
 export class SubscriptionsModule {}

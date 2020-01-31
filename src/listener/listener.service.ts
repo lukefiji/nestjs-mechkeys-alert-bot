@@ -2,12 +2,16 @@ import { Injectable } from '@nestjs/common';
 import snoowrap from 'snoowrap';
 import { SubmissionStream, InboxStream } from 'snoostorm';
 import { PostsService } from '../posts/posts.service';
+import { SubscriptionsService } from '../subscriptions/subscriptions.service';
 
 @Injectable()
 export class ListenerService {
   bot: snoowrap;
 
-  constructor(private readonly postsService: PostsService) {
+  constructor(
+    private readonly postsService: PostsService,
+    private readonly subscriptionsService: SubscriptionsService
+  ) {
     this.bot = new snoowrap({
       clientId: process.env.CLIENT_ID,
       clientSecret: process.env.CLIENT_SECRET,
