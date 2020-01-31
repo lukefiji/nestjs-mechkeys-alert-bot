@@ -16,7 +16,7 @@ export class ListenerService {
     });
 
     this.listenForPosts();
-    this.listenForMessages();
+    this.listenForSubscriptions();
   }
 
   async handleNewMessages(data: any) {
@@ -49,10 +49,10 @@ export class ListenerService {
     }
   }
 
-  listenForMessages(): void {
+  listenForSubscriptions(): void {
     const messages = new InboxStream(this.bot, {
       filter: 'inbox',
-      pollTime: 2000,
+      pollTime: parseInt(process.env.INBOX_POLL_TIME, 10),
       limit: 1
     });
 
