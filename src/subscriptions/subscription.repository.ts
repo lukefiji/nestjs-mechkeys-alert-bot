@@ -24,7 +24,7 @@ export class SubscriptionRepositry extends Repository<Subscription> {
       console.log(error);
       throw new InternalServerErrorException();
     }
-
+    console.log(subscription);
     return subscription;
   }
 }

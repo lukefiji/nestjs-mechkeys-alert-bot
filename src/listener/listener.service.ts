@@ -2,12 +2,16 @@ import { Injectable } from '@nestjs/common';
 import snoowrap from 'snoowrap';
 import { SubmissionStream, InboxStream } from 'snoostorm';
 import { PostsService } from '../posts/posts.service';
+import { SubscriptionsService } from '../subscriptions/subscriptions.service';
 
 @Injectable()
 export class ListenerService {
   bot: snoowrap;
 
-  constructor(private readonly postsService: PostsService) {
+  constructor(
+    private readonly postsService: PostsService,
+    private readonly subscriptionsService: SubscriptionsService
+  ) {
     this.bot = new snoowrap({
       clientId: process.env.CLIENT_ID,
       clientSecret: process.env.CLIENT_SECRET,
@@ -22,6 +26,12 @@ export class ListenerService {
   async handleNewMessages(data: any) {
     console.log(JSON.stringify(data));
     const { id, title, subject, body, author } = data;
+    const subscriptionsService = await this.subscriptionsService.saveSubscription(
+      {
+        username: author,
+        keyword: subject
+      }
+    );
   }
 
   async handleNewPosts(data: any) {
@@ -52,7 +62,9 @@ export class ListenerService {
   listenForSubscriptions(): void {
     const messages = new InboxStream(this.bot, {
       filter: 'inbox',
-      pollTime: parseInt(process.env.INBOX_POLL_TIME, 10),
+      pollTime: process.env.INBOX_POLL_TIME
+        ? parseInt(process.env.INBOX_POLL_TIME, 10)
+        : 5000,
       limit: 1
     });
 
