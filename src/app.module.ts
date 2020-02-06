@@ -7,6 +7,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { PostsModule } from './posts/posts.module';
 import { MatchesModule } from './matches/matches.module';
 import { ListenerModule } from './listener/listener.module';
+import { UsersModule } from './users/users.module';
 import typeOrmConfig from './typeorm.config';
 
 @Module({
@@ -16,7 +17,8 @@ import typeOrmConfig from './typeorm.config';
     SubscriptionsModule,
     PostsModule,
     MatchesModule,
-    ListenerModule
+    ListenerModule,
+    UsersModule
   ],
   controllers: [AppController],
   providers: [AppService]

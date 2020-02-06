@@ -26,6 +26,12 @@ export class ListenerService {
   async handleNewMessages(data: any) {
     console.log(JSON.stringify(data));
     const { id, title, subject, body, author } = data;
+    const subscriptionsService = await this.subscriptionsService.saveSubscription(
+      {
+        username: author,
+        keyword: subject
+      }
+    );
   }
 
   async handleNewPosts(data: any) {
@@ -56,7 +62,9 @@ export class ListenerService {
   listenForSubscriptions(): void {
     const messages = new InboxStream(this.bot, {
       filter: 'inbox',
-      pollTime: parseInt(process.env.INBOX_POLL_TIME, 10),
+      pollTime: process.env.INBOX_POLL_TIME
+        ? parseInt(process.env.INBOX_POLL_TIME, 10)
+        : 5000,
       limit: 1
     });
 
