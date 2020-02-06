@@ -26,12 +26,12 @@ export class ListenerService {
   async handleNewMessages(data: any) {
     console.log(JSON.stringify(data));
     const { id, title, subject, body, author } = data;
-    const subscriptionsService = await this.subscriptionsService.saveSubscription(
-      {
-        username: author,
-        keyword: subject
-      }
-    );
+    const subscription = await this.subscriptionsService.saveSubscription({
+      username: author.name,
+      keyword: subject
+    });
+    console.log(subscription);
+    this.bot.getMessage(id).reply(`I have received your message: ${subject}`);
   }
 
   async handleNewPosts(data: any) {

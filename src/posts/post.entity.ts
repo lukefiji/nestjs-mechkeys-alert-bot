@@ -6,7 +6,7 @@ import {
   BaseEntity,
   OneToMany
 } from 'typeorm';
-import { IsNotEmpty } from 'class-validator';
+import { IsNotEmpty, IsDate } from 'class-validator';
 import { Match } from '../matches/match.entity';
 
 @Entity()
@@ -24,5 +24,12 @@ export class Post extends BaseEntity {
   title: string;
 
   @CreateDateColumn()
+  @IsDate()
   createdAt: Date;
+
+  @OneToMany(
+    type => Match,
+    match => match.post
+  )
+  matches: Match[];
 }

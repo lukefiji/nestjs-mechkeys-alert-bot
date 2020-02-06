@@ -8,6 +8,8 @@ import {
   PrimaryColumn
 } from 'typeorm';
 import { Subscription } from '../subscriptions/subscription.entity';
+import { IsDate } from 'class-validator';
+import { Match } from '../matches/match.entity';
 
 @Entity()
 @Unique(['username'])
@@ -19,7 +21,15 @@ export class User extends BaseEntity {
   urlHash: string;
 
   @CreateDateColumn()
+  @IsDate()
   createdAt: Date;
+
+  @OneToMany(
+    type => Match,
+    match => match.user,
+    { eager: true }
+  )
+  user: User;
 
   @OneToMany(
     type => Subscription,

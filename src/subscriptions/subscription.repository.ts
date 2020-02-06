@@ -19,12 +19,11 @@ export class SubscriptionRepository extends Repository<Subscription> {
     subscription.createdAt = new Date();
 
     try {
-      // await subscription.save();
+      await subscription.save();
+      return subscription;
     } catch (error) {
       console.log(error);
       throw new InternalServerErrorException();
     }
-    console.log(subscription);
-    return subscription;
   }
 }
