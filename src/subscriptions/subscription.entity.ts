@@ -5,7 +5,8 @@ import {
   CreateDateColumn,
   OneToMany,
   ManyToOne,
-  Column
+  Column,
+  Unique
 } from 'typeorm';
 import { IsNotEmpty, IsDate } from 'class-validator';
 import { BaseEntity } from 'typeorm';
@@ -13,14 +14,15 @@ import { User } from '../users/user.entity';
 import { Match } from '../matches/match.entity';
 
 @Entity()
+@Unique(['keyword', 'username'])
 export class Subscription extends BaseEntity {
   @PrimaryColumn()
   @IsNotEmpty()
-  keyword: string;
+  username: string;
 
   @PrimaryColumn()
   @IsNotEmpty()
-  username: string;
+  keyword: string;
 
   @CreateDateColumn()
   @IsDate()
@@ -35,7 +37,7 @@ export class Subscription extends BaseEntity {
 
   @OneToMany(
     type => Match,
-    match => match.keyword,
+    match => match.subscription,
     { eager: true }
   )
   matches: Match[];

@@ -25,13 +25,19 @@ export class ListenerService {
 
   async handleNewMessages(data: any) {
     console.log(JSON.stringify(data));
-    const { id, title, subject, body, author } = data;
-    const subscription = await this.subscriptionsService.saveSubscription({
+    const { id, title, subject, body, author, parent_id } = data;
+
+    // Use subject if a new message, and body if it is a reply
+    const keyword = parent_id === null ? subject : body;
+
+    const newSubscription = await this.subscriptionsService.saveSubscription({
       username: author.name,
-      keyword: subject
+      keyword
     });
-    console.log(subscription);
-    this.bot.getMessage(id).reply(`I have received your message: ${subject}`);
+
+    if (newSubscription) {
+      this.bot.getMessage(id).reply(`I have received your message: ${keyword}`);
+    }
   }
 
   async handleNewPosts(data: any) {

@@ -33,7 +33,7 @@ export class Match extends BaseEntity {
 
   @ManyToOne(
     type => Post,
-    post => post.id,
+    post => post.matches,
     { eager: false }
   )
   post: Post;
@@ -43,5 +43,5 @@ export class Match extends BaseEntity {
     subscription => subscription.matches,
     { eager: false }
   )
-  subcription: Subscription;
+  subscription: Subscription;
 }

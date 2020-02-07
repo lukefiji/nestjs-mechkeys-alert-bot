@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { SubscriptionRepository } from './subscription.repository';
 import { Subscription } from './subscription.entity';
@@ -14,8 +14,12 @@ export class SubscriptionsService {
   async saveSubscription(
     saveSubscriptionDto: SaveSubscriptionDto
   ): Promise<Subscription> {
-    return await this.subscriptionRepository.saveSubscription(
-      saveSubscriptionDto
-    );
+    try {
+      return await this.subscriptionRepository.saveSubscription(
+        saveSubscriptionDto
+      );
+    } catch (error) {
+      console.log(error);
+    }
   }
 }

@@ -8,16 +8,18 @@ import {
   PrimaryColumn
 } from 'typeorm';
 import { Subscription } from '../subscriptions/subscription.entity';
-import { IsDate } from 'class-validator';
+import { IsDate, IsNotEmpty } from 'class-validator';
 import { Match } from '../matches/match.entity';
 
 @Entity()
 @Unique(['username'])
 export class User extends BaseEntity {
   @PrimaryColumn()
+  @IsNotEmpty()
   username: string;
 
   @Column()
+  @IsNotEmpty()
   urlHash: string;
 
   @CreateDateColumn()
@@ -33,7 +35,7 @@ export class User extends BaseEntity {
 
   @OneToMany(
     type => Subscription,
-    subscripton => subscripton.username,
+    subscripton => subscripton.user,
     // Get subsciptions when we retrieve a user
     { eager: true }
   )

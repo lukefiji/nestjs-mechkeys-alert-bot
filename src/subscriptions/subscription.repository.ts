@@ -19,8 +19,12 @@ export class SubscriptionRepository extends Repository<Subscription> {
     subscription.createdAt = new Date();
 
     try {
-      await subscription.save();
-      return subscription;
+      const found = await this.findOne({ username, keyword });
+      if (!found) {
+        return await subscription.save();
+      } else {
+        return null;
+      }
     } catch (error) {
       console.log(error);
       throw new InternalServerErrorException();
