@@ -42,11 +42,10 @@ export class ListenerService {
 
   async handleNewPosts(data: any) {
     const { title, url, id } = data;
-    const normalizedTitle = title.toLowerCase();
     const savedPost = await this.postsService.savePost({
       id,
       url,
-      title: normalizedTitle
+      title
     });
     console.log(savedPost);
   }
