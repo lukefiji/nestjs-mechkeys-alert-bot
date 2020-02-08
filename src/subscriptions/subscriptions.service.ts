@@ -11,6 +11,10 @@ export class SubscriptionsService {
     private subscriptionRepository: SubscriptionRepository
   ) {}
 
+  async getSubscriptionsByUuid(uuid) {
+    return await this.subscriptionRepository.getSubscriptionsByUuid(uuid);
+  }
+
   async saveSubscription(
     saveSubscriptionDto: SaveSubscriptionDto
   ): Promise<Subscription> {

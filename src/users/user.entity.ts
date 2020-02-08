@@ -20,7 +20,7 @@ export class User extends BaseEntity {
 
   @Column()
   @IsNotEmpty()
-  urlHash: string;
+  uuid: string;
 
   @CreateDateColumn()
   @IsDate()

@@ -5,7 +5,13 @@ import { SaveSubscriptionDto } from './saveSubscription.dto';
 
 @EntityRepository(Subscription)
 export class SubscriptionRepository extends Repository<Subscription> {
-  async getSubscriptions() {}
+  async getSubscriptionsByUuid(uuid) {
+    try {
+      this.find({ where: { uuid } });
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   async saveSubscription(
     saveSubscriptionDto: SaveSubscriptionDto
