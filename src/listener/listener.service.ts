@@ -3,6 +3,7 @@ import snoowrap from 'snoowrap';
 import { SubmissionStream, InboxStream } from 'snoostorm';
 import { PostsService } from '../posts/posts.service';
 import { SubscriptionsService } from '../subscriptions/subscriptions.service';
+import yargsParser from 'yargs-parser';
 
 @Injectable()
 export class ListenerService {
@@ -28,15 +29,23 @@ export class ListenerService {
     const { id, title, subject, body, author, parent_id } = data;
 
     // Use subject if a new message, and body if it is a reply
-    const keyword = parent_id === null ? subject : body;
+    const message = parent_id === null ? subject : body;
+    const args = yargsParser(message);
 
-    const newSubscription = await this.subscriptionsService.saveSubscription({
-      username: author.name,
-      keyword
-    });
+    const { keyword } = args;
+    console.log({ message, args, keyword });
 
-    if (newSubscription) {
-      this.bot.getMessage(id).reply(`I have received your message: ${keyword}`);
+    if (keyword) {
+      const newSubscription = await this.subscriptionsService.saveSubscription({
+        username: author.name,
+        keyword
+      });
+
+      if (newSubscription) {
+        this.bot
+          .getMessage(id)
+          .reply(`I have received your keyword: ${keyword}`);
+      }
     }
   }
 
