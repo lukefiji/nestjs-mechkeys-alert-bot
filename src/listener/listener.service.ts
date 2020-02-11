@@ -5,6 +5,7 @@ import { PostsService } from '../posts/posts.service';
 import { SubscriptionsService } from '../subscriptions/subscriptions.service';
 import yargsParser from 'yargs-parser';
 import { UsersService } from '../users/users.service';
+import { User } from '../users/user.entity';
 
 @Injectable()
 export class ListenerService {
@@ -37,9 +38,17 @@ export class ListenerService {
     const { keyword } = args;
     console.log({ message, args, keyword });
 
+    const username = author.name;
+    let user: User = await this.usersService.findUser(username);
+
+    // If user doesn't exist, create a new one
+    if (!user) {
+      user = await this.usersService.saveUser({ username });
+    }
+
     if (keyword) {
       const newSubscription = await this.subscriptionsService.saveSubscription({
-        username: author.name,
+        username,
         keyword
       });
 

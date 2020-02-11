@@ -1,4 +1,5 @@
 import { EntityRepository, Repository } from 'typeorm';
+import nanoid from 'nanoid';
 import { User } from './user.entity';
 import { SaveUserDto } from './saveUser.dto';
 
@@ -9,8 +10,16 @@ export class UserRepository extends Repository<User> {
   }
 
   async saveUser(saveUserDto: SaveUserDto) {
-    return await this.saveUser(saveUserDto);
-  }
+    const { username } = saveUserDto;
+    console.log(username);
+    const user = new User();
 
-  async getUser() {}
+    user.username = username;
+    user.uuid = nanoid();
+    user.createdAt = new Date();
+
+    console.log(user);
+
+    return await user.save();
+  }
 }
