@@ -4,6 +4,7 @@ import { SubmissionStream, InboxStream } from 'snoostorm';
 import { PostsService } from '../posts/posts.service';
 import { SubscriptionsService } from '../subscriptions/subscriptions.service';
 import yargsParser from 'yargs-parser';
+import { UsersService } from '../users/users.service';
 
 @Injectable()
 export class ListenerService {
@@ -11,7 +12,8 @@ export class ListenerService {
 
   constructor(
     private readonly postsService: PostsService,
-    private readonly subscriptionsService: SubscriptionsService
+    private readonly subscriptionsService: SubscriptionsService,
+    private readonly usersService: UsersService
   ) {
     this.bot = new snoowrap({
       clientId: process.env.CLIENT_ID,

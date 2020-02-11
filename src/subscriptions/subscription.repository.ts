@@ -2,6 +2,7 @@ import { EntityRepository, Repository } from 'typeorm';
 import { Subscription } from './subscription.entity';
 import { InternalServerErrorException } from '@nestjs/common';
 import { SaveSubscriptionDto } from './saveSubscription.dto';
+import { UserRepository } from '../users/user.repository';
 
 @EntityRepository(Subscription)
 export class SubscriptionRepository extends Repository<Subscription> {
