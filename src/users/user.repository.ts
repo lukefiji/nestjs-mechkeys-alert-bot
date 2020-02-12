@@ -11,7 +11,6 @@ export class UserRepository extends Repository<User> {
 
   async saveUser(saveUserDto: SaveUserDto) {
     const { username } = saveUserDto;
-    console.log(username);
     const user = new User();
 
     user.username = username;
