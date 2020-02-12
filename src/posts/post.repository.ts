@@ -5,7 +5,9 @@ import { InternalServerErrorException } from '@nestjs/common';
 
 @EntityRepository(Post)
 export class PostRepository extends Repository<Post> {
-  async getPosts() {}
+  async getPosts(): Promise<Post[]> {
+    return this.find();
+  }
 
   async savePost(savePostDto: SavePostDto): Promise<Post> {
     const { id, url, title } = savePostDto;

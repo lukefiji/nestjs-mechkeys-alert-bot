@@ -11,6 +11,10 @@ export class PostsService {
     private postRepository: PostRepository
   ) {}
 
+  async getPosts(): Promise<Post[]> {
+    return this.postRepository.getPosts();
+  }
+
   async savePost(savePostDto: SavePostDto): Promise<Post> {
     return await this.postRepository.savePost(savePostDto);
   }
