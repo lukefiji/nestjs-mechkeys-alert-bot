@@ -7,6 +7,10 @@ import { Match } from './match.entity';
 export class MatchesService {
   constructor(private readonly matchRepository: MatchRepository) {}
 
+  async getMatchesByUuid(): Promise<Match[]> {
+    return await this.matchRepository.getMatchesByUuid();
+  }
+
   async saveMatch(saveMatchDto: SaveMatchDto): Promise<Match> {
     return await this.matchRepository.saveMatch(saveMatchDto);
   }

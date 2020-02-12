@@ -4,6 +4,11 @@ import { SaveMatchDto } from './saveMatch.dto';
 
 @EntityRepository(Match)
 export class MatchRepository extends Repository<Match> {
+  async getMatchesByUuid(): Promise<Match> {
+    const uuid = 'testUuid';
+    // Return matches
+  }
+
   async saveMatch(saveMatchDto: SaveMatchDto): Promise<Match> {
     const { keyword, user } = saveMatchDto;
 
